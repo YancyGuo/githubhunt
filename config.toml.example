@@ -19,3 +19,11 @@ deepseek_model = "deepseek-chat"  # 可选: deepseek-chat, deepseek-reasoner, �
 qwen_api_key = "sk-xxxxxx"
 qwen_base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"  # Qwen API 地址，可替换为中转 API
 qwen_model = "qwen3-vl-plus"  # Qwen 视觉模型
+
+[api]
+# API 服务配置
+host = "0.0.0.0"
+port = 7777
+# API 密钥（用于鉴权，任意非空字符串即可）
+# 如果不设置此字段，API 将不进行鉴权验证
+api_key = "sk-your-api-key"

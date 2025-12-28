@@ -104,3 +104,83 @@ sudo docker run --name steel-browser-api -d -p 3000:3000 -p 9223:9223 ghcr.io/st
 ```bash
 uv run agent.py --query "解释 xgzlucario/rotom 的流程图" --visual
 ```
+
+## API 服务
+
+githubhunt 提供了 OpenAI 兼容的 API 服务，可以与 OpenWebUI 等工具集成。
+
+### 配置 API
+
+在 `config.toml` 中添加 API 配置：
+
+```toml
+[api]
+host = "0.0.0.0"
+port = 7777
+# API 密钥（用于鉴权，任意非空字符串即可）
+# 如果不设置此字段，API 将不进行鉴权验证
+api_key = "sk-your-api-key"
+```
+
+### 启动 API 服务
+
+使用提供的脚本启动服务：
+
+```bash
+./run_api.sh
+```
+
+或者手动启动：
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+uv run uvicorn api_server:app --host 0.0.0.0 --port 7777
+```
+
+### API 端点
+
+服务提供以下 OpenAI 兼容端点：
+
+- `GET /health` - 健康检查
+- `GET /v1/models` - 获取可用模型列表
+- `POST /v1/chat/completions` - 聊天补全（支持流式和非流式）
+
+### 测试 API
+
+```bash
+# 健康检查
+curl http://localhost:7777/health
+
+# 获取模型列表
+curl http://localhost:7777/v1/models
+
+# 发送聊天请求
+curl -X POST http://localhost:7777/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-your-api-key" \
+  -d '{
+    "model": "githubhunt-agent",
+    "messages": [{"role": "user", "content": "查找 Python HTTP 客户端库"}],
+    "stream": false
+  }'
+```
+
+### 与 OpenWebUI 集成
+
+在 OpenWebUI 中配置：
+
+- **Base URL**: `http://localhost:7777/v1`
+- **API Key**: 与 `config.toml` 中配置的 `api_key` 一致
+- **Model**: 选择 `githubhunt-agent`
+
+配置完成后即可在 OpenWebUI 中使用自然语言搜索 GitHub 仓库。
+
+### API 功能特性
+
+- ✅ OpenAI 兼容接口
+- ✅ 流式和非流式响应
+- ✅ Bearer Token 鉴权
+- ✅ 混合搜索（MeiliSearch + GitHub API）
+- ✅ 智能工具调用（搜索、获取 README 等）
+- ✅ Cloudflare WAF 绕过（User-Agent 伪装）
+
