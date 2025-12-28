@@ -219,6 +219,7 @@ async def main():
             id=config["app"].get("deepseek_model", "deepseek-chat"),
             api_key=config["app"]["deepseek_api_key"],
             base_url=config["app"].get("deepseek_base_url", "https://api.deepseek.com/v1"),
+            default_headers={"User-Agent": "curl/7.74.0"},  # 伪装 User-Agent 绕过检测
         ),
         markdown=True,
         tools=tools,
