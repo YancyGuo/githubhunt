@@ -149,7 +149,7 @@ def view_repo_readme(full_name: str, query: str) -> str:
 
     # analyze the images
     client = OpenAI(
-        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        base_url=config["app"].get("qwen_base_url", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
         api_key=config["app"]["qwen_api_key"],
     )
 
@@ -171,7 +171,7 @@ def view_repo_readme(full_name: str, query: str) -> str:
     contents.append({"type": "text", "text": query})
 
     response = client.chat.completions.create(
-        model="qwen3-vl-plus",
+        model=config["app"].get("qwen_model", "qwen3-vl-plus"),
         messages=[
             {
                 "role": "system",
@@ -215,7 +215,11 @@ async def main():
     agent = Agent(
         name="Github Agent",
         instructions=SYSTEM_PROMPT,
-        model=DeepSeek(id="deepseek-chat", api_key=config["app"]["deepseek_api_key"]),
+        model=DeepSeek(
+            id=config["app"].get("deepseek_model", "deepseek-chat"),
+            api_key=config["app"]["deepseek_api_key"],
+            base_url=config["app"].get("deepseek_base_url", "https://api.deepseek.com/v1"),
+        ),
         markdown=True,
         tools=tools,
         debug_mode=args.debug,

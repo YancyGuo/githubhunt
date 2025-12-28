@@ -34,7 +34,34 @@ githubhunt 是一个基于 AI Agent 的自然语言 Github 仓库搜索工具, �
 
 ### 环境配置
 
-在 `config.toml` 中配置 Github Token(必需) 和 DeepSeek API_KEY(必需) 或者其他模型调用配置, 如果需要使用视觉分析工具, 还需要安装 Steel Browser 并配置 QWEN_API_KEY。
+1. 复制配置文件模板：
+
+```bash
+cp config.toml.example config.toml
+```
+
+2. 编辑 `config.toml` 并填写以下必需配置：
+
+```toml
+[app]
+# Github Personal Access Token (必需)
+# 获取地址: https://github.com/settings/tokens
+github_token = "github_pat_xxxxxx"
+
+# DeepSeek API 配置 (必需)
+# 获取地址: https://platform.deepseek.com/api_keys
+deepseek_api_key = "sk-xxxxxx"
+deepseek_base_url = "https://api.deepseek.com/v1"  # 支持中转 API
+deepseek_model = "deepseek-chat"  # 可选模型: deepseek-chat, deepseek-reasoner
+
+# Qwen API 配置 (可选，仅视觉分析需要)
+# 获取地址: https://dashscope.console.aliyun.com/apiKey
+qwen_api_key = "sk-xxxxxx"
+qwen_base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+qwen_model = "qwen3-vl-plus"
+```
+
+**注意**: `config.toml` 包含敏感信息，已添加到 `.gitignore`，不会被提交到 Git。
 
 ### 启动 MeiliSearch
 

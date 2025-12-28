@@ -1,0 +1,21 @@
+[meili]
+host = "localhost"
+port = 17700
+master_key = "3pEMr22-fnvK5-Bk0KDuPMddtcZ23cgvPHbRQq_Bvao"
+
+[app]
+# Github Personal Access Token
+# 获取地址: https://github.com/settings/tokens
+github_token = "github_pat_xxxxxx"
+
+# DeepSeek API 配置
+# 获取地址: https://platform.deepseek.com/api_keys
+deepseek_api_key = "sk-xxxxxx"
+deepseek_base_url = "https://api.deepseek.com/v1"  # DeepSeek API 地址，可替换为中转 API
+deepseek_model = "deepseek-chat"  # 可选: deepseek-chat, deepseek-reasoner, 或其他兼容模型
+
+# Qwen API 配置（仅视觉分析需要）
+# 获取地址: https://dashscope.console.aliyun.com/apiKey
+qwen_api_key = "sk-xxxxxx"
+qwen_base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"  # Qwen API 地址，可替换为中转 API
+qwen_model = "qwen3-vl-plus"  # Qwen 视觉模型
